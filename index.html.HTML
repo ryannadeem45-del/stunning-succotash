@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laiba Food - Premium Spices Store</title>
+    <style>
+#adminModal { display:none; position:fixed; top:20%; left:50%; transform:translateX(-50%); background:#fff; padding:20px; border:3px solid #580619; z-index:9999; border-radius:15px; width:300px; box-shadow:0 0 20px rgba(0,0,0,0.5); }
+#adminModal input, #adminModal select { width:100%; padding:10px; margin:10px 0; }
+        /* General Styles & Custom Theme */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #faf6f0; /* Soft Warm Cream Background */
+            color: #333;
+        }
+
+        /* Header Section (Logo Match Theme) */
+        header {
+            background-color: #580619; /* Deep Maroon from Logo */
+            padding: 12px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 3px solid #cf9d3c; /* Elegant Gold Border */
+        }
+        
+        /* Branding Layout (Logo + Text + Tagline) */
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .brand-logo-img {
+            height: 65px; /* Logo size */
+            width: auto;
+            display: block;
+            object-fit: contain;
+        }
+        .brand-text-block {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .brand-name {
+            font-size: 24px;
+            font-weight: 800;
+            color: #ffffff; /* White Text */
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+        .brand-name span {
+            color: #cf9d3c; /* Gold highlight for Food */
+        }
+        .brand-tagline {
+            font-size: 13px;
+            color: #f5e4c3; /* Light gold/cream for tagline */
+            font-weight: 500;
+            margin-top: 2px;
+            font-style: italic;
+        }
+        
+        /* Search Bar */
+        .search-bar {
+            width: 35%;
+            display: flex;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #cf9d3c;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+            font-size: 14px;
+        }
+        .search-bar button {
+            background-color: #cf9d3c; /* Gold Button */
+            color: #580619; /* Maroon Text */
+            border: none;
+            padding: 10px 22px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .search-bar button:hover {
+            background-color: #e2b24d;
+        }
+        
+        /* Header Menu & Icons */
+        .header-right-menu {
+            display: flex;
+            align-items: center;
+        }
+        .cart-container {
+            position: relative;
+            cursor: pointer;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .cart-icon {
+            font-size: 26px;
+            color: #ffffff;
+        }
+        .cart-count {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background-color: #cf9d3c; /* Gold badge */
+            color: #580619; /* Maroon text */
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #580619;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        /* Banner Section */
+        .banner-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        .banner {
+            background: linear-gradient(rgba(44, 2, 11, 0.65), rgba(44, 2, 11, 0.65)), url('slider1.png') no-repeat center center;
+            background-size: cover; 
+            width: 100%;
+            height: 280px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 2px solid #cf9d3c;
+            direction: rtl;
+        }
+        .banner h1 {
+            font-size: 42px;
+            margin-bottom: 12px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            color: #ffffff;
+        }
+        .banner p {
+            font-size: 22px;
+            background-color: #cf9d3c; /* Matching Gold Accent */
+            color: #3a020e;
+            padding: 8px 28px;
+            border-radius: 30px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+            font-weight: bold;
+        }
+
+        /* Products Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .section-title {
+            font-size: 26px;
+            margin-top: 30px;
+            margin-bottom: 25px;
+            color: #580619;
+            border-bottom: 3px solid #cf9d3c;
+            padding-bottom: 5px;
+            display: inline-block;
+            font-weight: 700;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid #eee;
+        }
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 6px 20px rgba(88, 6, 25, 0.15);
+            border-color: #cf9d3c;
+        }
+        
+        .product-img {
+            width: 100%;
+            height: 280px; 
+            object-fit: contain; 
+            background-color: #fdfdfd;
+            padding: 15px;
+            border-bottom: 1px solid #f3f3f3;
+        }
+        .product-info {
+            padding: 20px;
+        }
+        .product-title {
+            font-size: 19px;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 10px;
+        }
+        .product-title small {
+            display: block;
+            font-size: 13px;
+            color: #666;
+            font-weight: normal;
+            margin-top: 2px;
+        }
+        .price-box {
+            margin-bottom: 18px;
+        }
+        .discount-price {
+            color: #580619; /* Maroon for price */
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        /* Weight Selection Elements */
+        .option-label {
+            font-size: 13px;
+            color: #555;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .weight-boxes-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+        .weight-box {
+            border: 1px solid #cccccc;
+            padding: 6px 14px;
+            font-size: 13px;
+            background-color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+            font-weight: 500;
+            transition: all 0.15s ease;
+        }
+        .weight-box:hover {
+            border-color: #580619;
+            color: #580619;
+        }
+        .weight-box.selected {
+            border-color: #580619;
+            color: #580619;
+            background-color: #fdf2f4;
+            font-weight: bold;
+        }
+        .weight-box.selected::after {
+            content: "✓";
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: #580619;
+            color: white;
+            font-size: 8px;
+            padding: 1px 3px 0 3px;
+            clip-path: polygon(100% 0, 0 100%, 100% 100%);
+        }
+
+        /* Qty Counter Elements */
+        .qty-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+        .qty-btn {
+            width: 34px;
+            height: 34px;
+            background-color: #f5f5f5;
+            border: 1px solid #cccccc;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .qty-btn:hover {
+            background-color: #e9e9e9;
+            border-color: #999;
+        }
+        .qty-input {
+            width: 50px;
+            height: 34px;
+            text-align: center;
+            border: none;
+            font-size: 15px;
+            font-weight: bold;
+            outline: none;
+            color: #212121;
+        }
+        
+        /* Action Buttons Theme Adjustments */
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .btn {
+            padding: 12px 5px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            border: none;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .btn:active {
+            transform: scale(0.98);
+        }
+        .add-cart-btn {
+            background-color: #cf9d3c; /* Gold button */
+            color: #580619;
+        }
+        .add-cart-btn:hover {
+            background-color: #e2b24d;
+        }
+        .buy-now-btn {
+            background-color: #580619; /* Maroon button */
+            color: white;
+        }
+        .buy-now-btn:hover {
+            background-color: #440312;
+        }
+
+        /* Side Cart Panel Adjustments */
+        .cart-sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: none;
+            justify-content: flex-end;
+            z-index: 1100;
+        }
+        .cart-sidebar {
+            background: white;
+            width: 100%;
+            max-width: 390px;
+            height: 100%;
+            box-shadow: -3px 0 15px rgba(0,0,0,0.25);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .cart-sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #580619;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+        .cart-sidebar-header h3 {
+            font-size: 20px;
+            color: #580619;
+        }
+        .close-cart-btn {
+            font-size: 30px;
+            cursor: pointer;
+            color: #666;
+        }
+        .cart-items-list {
+            overflow-y: auto;
+            flex-grow: 1;
+            margin-bottom: 20px;
+        }
+        .cart-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .cart-item-name {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .cart-item-price-qty {
+            font-size: 14px;
+            color: #580619;
+            font-weight: bold;
+        }
+        .empty-cart-text {
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+            margin-top: 50px;
+        }
+        .cart-sidebar-footer {
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        .cart-total-box {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .cart-checkout-btn {
+            width: 100%;
+            background-color: #580619;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .cart-checkout-btn:hover {
+            background-color: #440312;
+        }
+
+        /* Checkout Form Modal Adjustments */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1200;
+        }
+        .modal-box {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 460px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+            position: relative;
+            border-top: 6px solid #580619;
+        }
+        .close-btn {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            font-size: 26px;
+            cursor: pointer;
+            color: #666;
+        }
+        .modal-box h3 {
+            margin-bottom: 18px;
+            color: #580619;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 12px;
+            font-size: 20px;
+        }
+        .selected-item-info {
+            background: #fdf2f4;
+            border-left: 4px solid #580619;
+            padding: 12px;
+            border-radius: 0 4px 4px 0;
+            margin-bottom: 18px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #580619;
+            white-space: pre-line;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #444;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            font-size: 14px;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #580619;
+        }
+        .form-group textarea {
+            resize: none;
+            height: 85px;
+        }
+        .confirm-btn {
+            width: 100%;
+            background-color: #1ea851; /* Trustworthy Green for checkout success */
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .confirm-btn:hover {
+            background-color: #178740;
+        }
+
+        .success-box {
+            text-align: center;
+            display: none;
+        }
+        .success-box h2 {
+            color: #1ea851;
+            margin-bottom: 12px;
+            }
+        .ok-btn {
+            background-color: #580619;
+            color: white;
+            padding: 10px 30px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Footer Theme Matching */
+        footer {
+            background-color: #2c020b; /* Extra Dark Maroon */
+            color: #fff;
+            padding: 0px ;
+            margin-top: 60px;
+            border-top: 5px solid #cf9d3c; /* Gold Top border */
+        }
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 20px;
+        }
+        .footer-left {
+            text-align: left;
+        }
+        .footer-logo-img {
+            height: 70px;
+            width: auto;
+            display: block;
+            object-fit: contain;
+            margin-bottom: 8px;
+        }
+        .footer-tagline {
+            font-size: 13px; 
+            color: #f5e4c3; 
+            font-style: italic;
+        }
+        .footer-right {
+            text-align: right;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .footer-right p strong {
+            color: #cf9d3c;
+        }
+        .copyright-bar {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #44111b;
+            font-size: 12px;
+            color: #aa868f;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. HEADER SECTION (With Brand Name, Logo, and Tagline) -->
+    <header>
+        <div class="brand-container">
+            <!-- Brand Logo Asset -->
+            <img src="logo.png" alt="Laiba Food Logo" class="brand-logo-img">
+            
+            <!-- Brand Text & Tagline -->
+            <div class="brand-text-block">
+                <div class="brand-name">Laiba<span>Food</span></div>
+                <div class="brand-tagline">خالص اور روایتی ذائقہ، جو ہر کھانے کو یادگار بنائے!</div>
+            </div>
+        </div>
+        
+        <!-- Search -->
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Masala search (e.g. haldi, mirch)..." onkeyup="if(event.key === 'Enter') filterProducts()">
+            <button onclick="filterProducts()">Search</button>
+        </div>
+
+        <!-- Cart Counter -->
+        <div class="header-right-menu">
+            <div class="cart-container" onclick="toggleCartSidebar(true)">
+                <svg class="cart-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <div class="cart-count" id="cartCounter">0</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. MAIN BANNER -->
+    <div class="banner-container">
+        <div class="banner">
+            <h1>LaibaFOOD خالص مصالحے</h1>
+            <p>گھر کے کھانوں میں لائیں اصلی رنگ اور خوشبو۔</p>
+        </div>
+    </div>
+
+    <!-- 3. PRODUCTS SECTION -->
+    <div class="container">
+        <h2 class="section-title">Our Premium Products</h2>
+        
+        <div class="products-grid" id="productsGrid">
+            <!-- Product 1: Haldi -->
+            <div class="product-card" id="p1" data-search-tags="haldi turmeric powder asli pisi pilkh yellow">
+                <img src="haldi.png" alt="اصلی ہلدی پاؤڈر" class="product-img">
+                <div class="product-info">
+                    <div class="product-title" data-base-name="اصلی ہلدی پاؤڈر (Turmeric Powder)">
+                        اصلی ہلدی پاؤڈر
+                        <small>Turmeric Powder</small>
+                    </div>
+                    
+                    <div class="price-box">
+                        <span class="discount-price" id="price-p1">PKR 300</span>
+                    </div>
+                    
+                    <span class="option-label">Wazan (Weight)</span>
+                    <div class="weight-boxes-container">
+                        <div class="weight-box selected" data-weight="500gm" data-price="300" onclick="selectWeight('p1', this)">500gm</div>
+                        <div class="weight-box" data-weight="1kg" data-price="680" onclick="selectWeight('p1', this)">1kg</div>
+                        <div class="weight-box" data-weight="5kg" data-price="3300" onclick="selectWeight('p1', this)">5kg</div>
+                        <div class="weight-box" data-weight="10kg" data-price="6500" onclick="selectWeight('p1', this)">10kg</div>
+                    </div>
+
+                    <span class="option-label">Tadaad (Quantity)</span>
+                    <div class="qty-container">
+                        <button class="qty-btn" onclick="changeQty('p1', -1)">-</button>
+                        <input type="text" class="qty-input" id="qty-p1" value="1" readonly>
+                        <button class="qty-btn" onclick="changeQty('p1', 1)">+</button>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn add-cart-btn" onclick="handleAction('p1', 'cart')">Add to Cart</button>
+                        <button class="btn buy-now-btn" onclick="handleAction('p1', 'buy')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 2: Lal Mirch Fine -->
+            <div class="product-card" id="p2" data-search-tags="lal mirch chilli chili powder pisi fine red">
+                <img src="lal-mirch.png" alt="پسی لال مرچ" class="product-img">
+                <div class="product-info">
+                    <div class="product-title" data-base-name="پسی لال مرچ (Fine Chilli Powder)">
+                        پسی لال مرچ
+                        <small>Fine Chilli Powder</small>
+                    </div>
+                    
+                    <div class="price-box">
+                        <span class="discount-price" id="price-p2">PKR 450</span>
+                    </div>
+                    
+                    <span class="option-label">Wazan (Weight)</span>
+                    <div class="weight-boxes-container">
+                        <div class="weight-box selected" data-weight="500gm" data-price="450" onclick="selectWeight('p2', this)">500gm</div>
+                        <div class="weight-box" data-weight="1kg" data-price="880" onclick="selectWeight('p2', this)">1kg</div>
+                        <div class="weight-box" data-weight="5kg" data-price="4300" onclick="selectWeight('p2', this)">5kg</div>
+                        <div class="weight-box" data-weight="10kg" data-price="8500" onclick="selectWeight('p2', this)">10kg</div>
+                    </div>
+
+                    <span class="option-label">Tadaad (Quantity)</span>
+                    <div class="qty-container">
+                        <button class="qty-btn" onclick="changeQty('p2', -1)">-</button>
+                        <input type="text" class="qty-input" id="qty-p2" value="1" readonly>
+                        <button class="qty-btn" onclick="changeQty('p2', 1)">+</button>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn add-cart-btn" onclick="handleAction('p2', 'cart')">Add to Cart</button>
+                        <button class="btn buy-now-btn" onclick="handleAction('p2', 'buy')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product 3: Kutti Mirch Flakes -->
+            <div class="product-card" id="p3" data-search-tags="kutti mirch crushed chili chilli flakes daddar">
+                <img src="kutti-mirch.png" onerror="this.onerror=null; this.src='kutti-mirch.jpg';" alt="کٹی ہوئی لال مرچ" class="product-img">
+                <div class="product-info">
+                    <div class="product-title" data-base-name="کٹی ہوئی لال مرچ (Crushed Chili Flakes)">
+                        کٹی ہوئی لال مرچ
+                        <small>Crushed Chili Flakes</small>
+                    </div>
+                    
+                    <div class="price-box">
+                        <span class="discount-price" id="price-p3">PKR 420</span>
+                    </div>
+                    
+                    <span class="option-label">Wazan (Weight)</span>
+                    <div class="weight-boxes-container">
+                        <div class="weight-box selected" data-weight="500gm" data-price="420" onclick="selectWeight('p3', this)">500gm</div>
+                        <div class="weight-box" data-weight="1kg" data-price="820" onclick="selectWeight('p3', this)">1kg</div>
+                        <div class="weight-box" data-weight="5kg" data-price="4000" onclick="selectWeight('p3', this)">5kg</div>
+                        <div class="weight-box" data-weight="10kg" data-price="7800" onclick="selectWeight('p3', this)">10kg</div>
+                    </div>
+
+                    <span class="option-label">Tadaad (Quantity)</span>
+                    <div class="qty-container">
+                        <button class="qty-btn" onclick="changeQty('p3', -1)">-</button>
+                        <input type="text" class="qty-input" id="qty-p3" value="1" readonly>
+                        <button class="qty-btn" onclick="changeQty('p3', 1)">+</button>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn add-cart-btn" onclick="handleAction('p3', 'cart')">Add to Cart</button>
+                        <button class="btn buy-now-btn" onclick="handleAction('p3', 'buy')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+<div class="product-card" id="garam-masala-id" data-search-tags="garam masala spices mix khushbu masala">
+    <img src="garam-masala.png" alt="خالص گرم مصالحہ" class="product-img">
+    <div class="product-info">
+        <div class="product-title" data-base-name="خالص گرم مصالحہ (Garam Masala)">
+            خالص گرم مصالحہ
+            <small>Garam Masala</small>
+        </div>
+        
+        <div class="price-box">
+            <span class="discount-price" id="price-garam-masala-id">PKR 550</span>
+        </div>
+        
+        <span class="option-label">Wazan (Weight)</span>
+        <div class="weight-boxes-container">
+            <div class="weight-box selected" data-weight="500gm" data-price="550" onclick="selectWeight('garam-masala-id', this)">500gm</div>
+            <div class="weight-box" data-weight="1kg" data-price="680" onclick="selectWeight('garam-masala-id', this)">1kg</div>
+            <div class="weight-box" data-weight="5kg" data-price="3300" onclick="selectWeight('garam-masala-id', this)">5kg</div>
+            <div class="weight-box" data-weight="10kg" data-price="6500" onclick="selectWeight('garam-masala-id', this)">10kg</div>
+        </div>
+
+        <span class="option-label">Tadaad (Quantity)</span>
+        <div class="qty-container">
+            <button class="qty-btn" onclick="changeQty('garam-masala-id', -1)">-</button>
+            <input type="text" class="qty-input" id="qty-garam-masala-id" value="1" readonly>
+            <button class="qty-btn" onclick="changeQty('garam-masala-id', 1)">+</button>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn add-cart-btn" onclick="handleAction('garam-masala-id', 'cart')">Add to Cart</button>
+            <button class="btn buy-now-btn" onclick="handleAction('garam-masala-id', 'buy')">Buy Now</button>
+        </div>
+    </div>
+</div>
+        </div>
+    </div>
+
+    <!-- 4. SIDE CART PANEL -->
+    <div class="cart-sidebar-overlay" id="cartSidebar">
+        <div class="cart-sidebar">
+            <div>
+                <div class="cart-sidebar-header">
+                    <h3>Your Cart</h3>
+                    <span class="close-cart-btn" onclick="toggleCartSidebar(false)">&times;</span>
+                </div>
+                <div class="cart-items-list" id="cartItemsList">
+                    <p class="empty-cart-text">Cart khaali hai. Products shamil karein!</p>
+                </div>
+            </div>
+
+            <div class="cart-sidebar-footer">
+                <div class="cart-total-box">
+                    <span>Total Amount:</span>
+                    <span id="cartTotalText">PKR 0</span>
+                </div>
+                <button class="cart-checkout-btn" onclick="checkoutAllCartItems()">Order Complete Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. CHECKOUT FORM MODAL PANEL -->
+    <div class="modal-overlay" id="checkoutModal">
+        <div class="modal-box">
+            <span class="close-btn" onclick="closeCheckout()">&times;</span>
+            
+            <div id="checkoutForm">
+                <h3>Checkout Details</h3>
+                <div class="selected-item-info" id="selectedItemDetails">
+                    Item Details Here
+                </div>
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="custName" placeholder="Apna naam likhein" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="custPhone" placeholder="03001234567" required>
+                </div>
+                <div class="form-group">
+                    <label>Delivery Address</label>
+                    <textarea id="custAddress" placeholder="Apna poora address likhein" required></textarea>
+                </div>
+                <button class="confirm-btn" onclick="submitOrder()">Confirm Order</button>
+            </div>
+
+            <div class="success-box" id="successBox">
+                <h2>🎉 Congratulations!</h2>
+                <p>Aap ka order kamyabi se receive ho chuka hai.</p>
+                <button class="ok-btn" onclick="closeCheckout()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. FOOTER SECTION -->
+    <footer>
+
+        <div class="footer-content">
+            <div class="footer-left">
+                <img src="logo.png" alt="Laiba Food Logo" class="footer-logo-img">
+                <div class="footer-tagline">خالص اور روایتی ذائقہ، جو ہر کھانے کو یادگار بنائے!</div>
+            </div>
+            <div class="footer-right">
+                <p><strong>Owner Name:</strong> M. Nadeem</p>
+                <p><strong>Phone Number:</strong> 📞(+92) 3002457420</p>
+            </div>
+            <div class="copyright-bar">
+<div style="text-align:center; margin-top:10px;">
+    <button onclick="adminTrigger()" style="opacity: 0;  border:none; cursor:pointer; font-size:10px;">Admin Access</button>
+</div>
+                &copy; 2026 Laiba Food. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripting Logic -->
+  <script>
+// Current version set karein
+const CURRENT_VERSION = "3"; 
+
+// Check karein ke kya version match karta hai
+if (localStorage.getItem('app_version') !== CURRENT_VERSION) {
+    localStorage.clear(); // Purana sara data (purane rates) delete ho jayenge
+    localStorage.setItem('app_version', CURRENT_VERSION); // Naya version set ho jayega
+    location.reload(); // Page ko force refresh karega
+}
+// 1. Data load karne ka process (SABSE PEHLE)
+let productPrices = JSON.parse(localStorage.getItem('savedPrices')) || {
+    'p1': { '500gm': 300, '1kg': 600, '5kg': 3000, '10kg': 6000 },
+    'p2': { '500gm': 450, '1kg': 900, '5kg': 4500, '10kg': 9000 },
+    'p3': { '500gm': 420, '1kg': 840, '5kg': 4200, '10kg': 8400 },
+    'garam-masala-id': { '500gm': 420, '1kg': 840, '5kg': 4200, '10kg': 8400 }
+
+};
+
+
+// 2. Admin Trigger (Footer ke liye)
+function adminTrigger() {
+    let pass = prompt("LAIBAFOOD:");
+    if(pass === "1234") {
+        document.getElementById('adminModal').style.display = "block";
+    } else {
+        alert("LAIBA FOOD!");
+    }
+}
+
+// 3. Admin Save Logic
+function saveAdminPrices() {
+    let pid = document.getElementById('adminProduct').value;
+    let p500 = parseInt(document.getElementById('adminPrice').value);
+    
+    // Yahan hum mathematically 1kg, 5kg aur 10kg bana rahe hain
+    productPrices[pid] = {
+        '500gm': p500,
+        '1kg': p500 * 2,
+        '5kg': p500 * 10,
+        '10kg': p500 * 20
+    };
+    
+    localStorage.setItem('savedPrices', JSON.stringify(productPrices));
+    alert("Prices Save Ho Gayi!");
+    location.reload();
+}
+
+// 4. Weight Select Logic (Price dynamic hogi)
+function selectWeight(cardId, selectedBox) {
+    const card = document.getElementById(cardId);
+    card.querySelectorAll('.weight-box').forEach(b => b.classList.remove('selected'));
+    selectedBox.classList.add('selected');
+    
+    const weight = selectedBox.getAttribute('data-weight');
+    const price = productPrices[cardId][weight]; // Variable se uthayega
+    
+    // UI Update
+    document.getElementById(`price-${cardId}`).innerText = "PKR " + price;
+    selectedBox.setAttribute('data-price', price); // Buy button ke liye update
+}
+
+// 5. Page Load hote hi prices ko refresh kar dega
+document.addEventListener('DOMContentLoaded', () => {
+    for (let pid in productPrices) {
+        let el = document.getElementById('price-' + pid);
+        if(el) el.innerText = "PKR " + productPrices[pid]['500gm'];
+    }
+});
+// Jab aap item cart ki list mein daal rahe hon, to ye format use karein:
+function renderCart() {
+    let cartContainer = document.getElementById('cart-list'); // Aapka cart div
+    cartContainer.innerHTML = ""; // Purani list saaf karein
+
+    cartItems.forEach((item, index) => {
+        cartContainer.innerHTML += `
+            <div class="cart-item">
+                <span>${item.name}</span>
+                <button onclick="removeFromCart(${index})" style="color:red; cursor:pointer;">X</button>
+
+            </div>
+        `;
+    });
+}
+
+        let currentItemDetailsText = "";
+        let currentTotalPrice = "";
+        let cartArray = []; 
+
+        function filterProducts() {
+            const input = document.getElementById('searchInput').value.toLowerCase().trim();
+            const productCards = document.querySelectorAll('.product-card');
+
+            productCards.forEach(card => {
+                const titleElement = card.querySelector('.product-title');
+                const productNameData = titleElement.getAttribute('data-base-name').toLowerCase();
+                const productNameHTML = titleElement.innerText.toLowerCase();
+                const searchTags = card.getAttribute('data-search-tags').toLowerCase();
+
+                if (productNameData.includes(input) || productNameHTML.includes(input) || searchTags.includes(input)) {
+                    card.style.display = "flex"; 
+                } else {
+                    card.style.display = "none"; 
+                }
+            });
+        }
+function selectWeight(cardId, selectedBox) {
+    const card = document.getElementById(cardId);
+    
+    // 1. Selection change karein
+    card.querySelectorAll('.weight-box').forEach(b => b.classList.remove('selected'));
+    selectedBox.classList.add('selected');
+    
+    // 2. Weight aur Price uthayein
+    const weight = selectedBox.getAttribute('data-weight');
+    
+    // Yahan ghalti ho rahi thi, humein 'productPrices' variable se data uthana hai
+    const price = productPrices[cardId][weight]; 
+    
+    // 3. Screen par price update karein
+    document.getElementById('price-' + cardId).innerText = "PKR " + price;
+    
+    // 4. (Optional) Agar aap buy button ke liye data rakhte hain to wo bhi update karein
+    selectedBox.setAttribute('data-price', price); 
+}        function getCardSelectedData(cardId) {
+            const card = document.getElementById(cardId);
+            const baseName = card.querySelector('.product-title').getAttribute('data-base-name');
+            const selectedBox = card.querySelector('.weight-box.selected');
+            const weightValue = selectedBox.getAttribute('data-weight');
+            const unitPrice = parseInt(selectedBox.getAttribute('data-price'));
+            const qty = parseInt(document.getElementById(`qty-${cardId}`).value) || 1;
+            
+            return {
+                fullName: `${baseName} (${weightValue})`,
+                unitPrice: unitPrice,
+                qty: qty,
+                total: unitPrice * qty
+            };
+        }
+
+        function handleAction(cardId, type) {
+            const data = getCardSelectedData(cardId);
+
+            if(type === 'cart') {
+                let found = cartArray.find(item => item.name === data.fullName);
+                if(found) {
+                    found.qty += data.qty;
+                } else {
+                    cartArray.push({ name: data.fullName, price: data.unitPrice, qty: data.qty });
+                }
+                updateCartUI();
+                toggleCartSidebar(true);
+            } else if(type === 'buy') {
+                currentItemDetailsText = `${data.fullName} x ${data.qty}`;
+                currentTotalPrice = "PKR " + data.total;
+                openCheckout(currentItemDetailsText, currentTotalPrice);
+            }
+        }
+
+        function toggleCartSidebar(open) {
+            document.getElementById('cartSidebar').style.display = open ? "flex" : "none";
+        }
+
+        function updateCartUI() {
+            let totalItemsCount = 0;
+            let totalAmount = 0;
+            const itemsListContainer = document.getElementById('cartItemsList');
+            
+            if(cartArray.length === 0) {
+                itemsListContainer.innerHTML = '<p class="empty-cart-text">Cart khaali hai. Products shamil karein!</p>';
+            } else {
+                itemsListContainer.innerHTML = '';
+                cartArray.forEach(item => {
+                    totalItemsCount += item.qty;
+                    totalAmount += (item.price * item.qty);
+
+                    let itemRow = document.createElement('div');
+                    itemRow.className = 'cart-item-row';
+                  itemRow.innerHTML = `
+    <span class="cart-item-name">${item.name} <br><small style="color:#777">Qty: ${item.qty}</small></span>
+    <span class="cart-item-price-qty">PKR ${item.price * item.qty}</span>
+    <button onclick="removeFromCart(${cartArray.indexOf(item)})" style="background:red; color:white; border:none; cursor:pointer;">Cancel</button>
+`;
+                    itemsListContainer.appendChild(itemRow);
+                });
+            }
+
+            document.getElementById('cartCounter').innerText = totalItemsCount;
+            document.getElementById('cartTotalText').innerText = "PKR " + totalAmount;
+        }
+
+        function checkoutAllCartItems() {
+            if(cartArray.length === 0) {
+                alert("Aap ka cart khaali hai!");
+                return;
+            }
+            currentItemDetailsText = cartArray.map(i => `• ${i.name} (x${i.qty})`).join('\n');
+            currentTotalPrice = document.getElementById('cartTotalText').innerText;
+            
+            toggleCartSidebar(false);
+            openCheckout(currentItemDetailsText, currentTotalPrice);
+        }
+
+        function openCheckout(detailsText, totalPrice) {
+            document.getElementById('selectedItemDetails').innerText = "Items:\n" + detailsText + "\n\nTotal Price: " + totalPrice;
+            document.getElementById('checkoutForm').style.display = "block";
+            document.getElementById('successBox').style.display = "none";
+            document.getElementById('checkoutModal').style.display = "flex";
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkoutModal').style.display = "none";
+        }
+
+        function submitOrder() {
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const address = document.getElementById('custAddress').value.trim();
+
+            if(!name || !phone || !address) {
+                alert("Plz saari details bharein!");
+                return;
+            }
+
+            const whatsappNumber = "923002457420"; /* Owner WhatsApp */
+            const orderMessage = `*New Order Received (Laiba Food)*\n\n` +
+                                 `*Customer Details:*\n` +
+                                 `Name: ${name}\n` +
+                                 `Phone: ${phone}\n` +
+                                 `Address: ${address}\n\n` +
+                                 `*Order Items:*\n${currentItemDetailsText}\n\n` +
+                                 `*Total Bill:* ${currentTotalPrice}`;
+
+            const encodedMessage = encodeURIComponent(orderMessage);
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+
+            document.getElementById('checkoutForm').style.display = "none";
+            document.getElementById('successBox').style.display = "block";
+            cartArray = [];
+            updateCartUI();
+        }
+function changeQty(cardId, amount) {
+    // 1. Input field ko uski ID se dhoondhein
+    let inputField = document.getElementById('qty-' + cardId);
+    
+    // 2. Current value uthayein
+    let currentVal = parseInt(inputField.value);
+    
+    // 3. Calculation karein
+    let newVal = currentVal + amount;
+    
+    // 4. Check karein ke value 1 se kam na ho
+    if (newVal >= 1) {
+        inputField.value = newVal;
+    }
+}
+
+function removeFromCart(index) {
+    // 1. Array se item remove karein
+    cartArray.splice(index, 1);
+    
+    // 2. LocalStorage update karein
+    localStorage.setItem('myCart', JSON.stringify(cartArray));
+    
+    // 3. UI update karein
+    updateCartUI();
+let clickCount = 0;
+
+function tripleClickAdmin() {
+    clickCount++;
+    console.log("Click count: " + clickCount); // Check karne ke liye F12 console dekhein
+
+    if (clickCount >= 3) {
+        adminTrigger(); // Ab sirf 3 ya us se zyada clicks par khulega
+        clickCount = 0; // Reset
+    } else {
+        // Agar 3 click nahi hue, toh 2 second baad reset kar do
+        setTimeout(() => {
+            clickCount = 0;
+        }, 2000); 
+    }
+} 
+
+}    </script>
+<div onclick="tripleClickAdmin()" style="height:20px; cursor:pointer;"></div>
+
+<div id="adminModal">
+    <h3 style="color:#580619;">Admin Panel</h3>
+    <select id="adminProduct">
+        <option value="p1">Haldi</option>
+        <option value="p2">Lal Mirch</option>
+        <option value="p3">Kutti Mirch</option>
+        <option value="garam-masala-id">garam-masala</option>
+
+    </select>
+    <input type="number" id="adminPrice" placeholder="500gm ka price">
+    <button onclick="saveAdminPrices()" style="width:100%; padding:10px; background:#580619; color:white; border:none; cursor:pointer;">Update Price</button>
+    <button onclick="document.getElementById('adminModal').style.display='none'" style="width:100%; margin-top:5px;">Close</button>
+</div>
+</body>
+</html>
