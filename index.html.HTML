@@ -819,7 +819,7 @@
         <span class="option-label">Tadaad (Quantity)</span>
         <div class="qty-container">
             <button class="qty-btn" onclick="changeQty('dhaniya', -1)">-</button>
-            <input type="text" class="qty-input" id="qty-" value="1" readonly>
+            <input type="text" class="qty-input" id="qty-dhaniya" value="1" readonly>
             <button class="qty-btn" onclick="changeQty('dhaniya', 1)">+</button>
         </div>
 
@@ -926,8 +926,7 @@ let productPrices = JSON.parse(localStorage.getItem('savedPrices')) || {
     'p2': { '500gm': 280, '1kg': 560, '5kg': 2800, '10kg': 5600 },
     'p3': { '500gm': 420, '1kg': 840, '5kg': 4200, '10kg': 8400 },
     'garam-masala-id': { '500gm': 420, '1kg': 840, '5kg': 4200, '10kg': 8400 },
-    'dhaniya-id': { '500gm': 420, '1kg': 840, '5kg': 4200, '10kg': 8400 }
-
+    'dhaniya': { '500gm': 300, '1kg': 600, '5kg': 3000, '10kg': 6000 }
 };
 
 
