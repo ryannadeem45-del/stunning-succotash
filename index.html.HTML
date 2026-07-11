@@ -188,30 +188,23 @@
         }
  /* Mobile ke liye layout fix */
 @media (max-width: 600px) {
+   @media (max-width: 600px) {
     .products-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr; /* Zabardasti 2 columns */
-        gap: 10px;
-        padding: 0 10px;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important; /* Mobile par har haal mein 2 columns */
+        gap: 10px !important;
+        padding: 5px !important;
     }
 
     .product-card {
-        padding: 7px; /* Padding kam ki taake andar jagah mile */
+        width: 100% !important; /* Card ko pura space lene dein */
+        min-width: 0 !important; /* Ye zaroori hai taake box chota ho sake */
+        margin: 0 !important;
     }
 
     .product-img {
-        height: 150px !important; /* Image ko thoda bara rakha taake clear dikhe */
-        object-fit: contain;
-    }
-
-    .product-title {
-        font-size: 14px; /* Title chota kiya taake wrap na ho */
-        min-height: 40px; /* Title ki height fix taake boxes barabar rahein */
-    }
-
-    .btn {
-        font-size: 12px;
-        padding: 8px 2px;
+        height: 120px !important; /* Image height ko fix karein */
+        width: 100% !important;
     }
 }
         .product-card {
