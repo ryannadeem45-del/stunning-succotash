@@ -1040,39 +1040,7 @@ function renderCart() {
                 }
             });
         }
-function selectWeight(cardId, selectedBox) {
-    const card = document.getElementById(cardId);
-    
-    // 1. Selection change karein
-    card.querySelectorAll('.weight-box').forEach(b => b.classList.remove('selected'));
-    selectedBox.classList.add('selected');
-    
-    // 2. Weight aur Price uthayein
-    const weight = selectedBox.getAttribute('data-weight');
-    
-    // Yahan ghalti ho rahi thi, humein 'productPrices' variable se data uthana hai
-    const price = productPrices[cardId][weight]; 
-    
-    // 3. Screen par price update karein
-    document.getElementById('price-' + cardId).innerText = "PKR " + price;
-    
-    // 4. (Optional) Agar aap buy button ke liye data rakhte hain to wo bhi update karein
-    selectedBox.setAttribute('data-price', price); 
-}        function getCardSelectedData(cardId) {
-            const card = document.getElementById(cardId);
-            const baseName = card.querySelector('.product-title').getAttribute('data-base-name');
-            const selectedBox = card.querySelector('.weight-box.selected');
-            const weightValue = selectedBox.getAttribute('data-weight');
-            const unitPrice = parseInt(selectedBox.getAttribute('data-price'));
-            const qty = parseInt(document.getElementById(`qty-${cardId}`).value) || 1;
-            
-            return {
-                fullName: `${baseName} (${weightValue})`,
-                unitPrice: unitPrice,
-                qty: qty,
-                total: unitPrice * qty
-            };
-        }
+
 
         function handleAction(cardId, type) {
             const data = getCardSelectedData(cardId);
