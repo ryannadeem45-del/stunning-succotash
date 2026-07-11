@@ -186,32 +186,34 @@
             display: inline-block;
             font-weight: 700;
         }
-/* Purane grid code ko hatayein aur yeh add karein */
-
-/* Laptop ke liye (Default) */
+/* Container ko set karein taake laptops par grid chale */
 .products-grid {
     display: grid !important;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
     gap: 20px !important;
+    padding: 20px !important;
+    width: 100% !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
 }
 
-/* Mobile ke liye (Screen 600px se kam) */
+/* Mobile ke liye specific rules */
 @media screen and (max-width: 600px) {
     .products-grid {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr !important; /* Yahan 2 columns fix kiye hain */
-        gap: 5px !important;
+        grid-template-columns: 1fr !important; /* Mobile par 1 column */
+        gap: 10px !important;
     }
 
     .product-card {
         width: 100% !important;
         margin: 0 !important;
-        padding: 5px !important;
     }
 
     .product-img {
-        height: 100px !important; /* Image choti taake 2 side-by-side aa sakein */
-        object-fit: contain !important;
+        width: 100% !important;
+        height: auto !important; /* Image ko chota hone se rokne ke liye 'auto' */
+        max-height: 250px !important; /* Mobile par max height fix */
+        object-fit: cover !important;
     }
 }
         .product-card {
