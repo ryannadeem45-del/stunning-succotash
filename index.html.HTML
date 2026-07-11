@@ -635,6 +635,27 @@
             color: #aa868f;
             width: 100%;
         }
+/* Laptop/Desktop ke liye: Grid layout */
+.products-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+    gap: 20px !important;
+    padding: 20px !important;
+}
+
+/* Mobile ke liye: Single column (Ek ke niche ek) */
+@media screen and (max-width: 600px) {
+    .products-grid {
+        grid-template-columns: 1fr !important; /* Mobile par sirf 1 column */
+        gap: 15px !important;
+    }
+
+    .product-card {
+        width: 100% !important; /* Poori width le */
+        max-width: 400px; /* Card ko zyada bada hone se roke */
+        margin: 0 auto !important; /* Center mein rahe */
+    }
+}
     </style>
 </head>
 <body>
