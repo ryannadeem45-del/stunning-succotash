@@ -1039,18 +1039,20 @@ function renderCart() {
                 }
             });
         }
+// Cart logic function
 function handleAction(cardId, type) {
     const card = document.getElementById(cardId);
-    
-    // Yahan se "selected" box ko dhoondo
+    if (!card) return; // Agar card nahi mila to ruk jao
+
+    // Sahi selected box dhoondo
     const selectedBox = card.querySelector('.weight-box.selected');
-    
-    // Agar box nahi mila toh 500gm wala default select kar lo
-    const box = selectedBox || card.querySelector('.weight-box');
-    
-    // Yahan se naya price uthao (jo selectWeight ne update kiya tha)
-    const weight = box.getAttribute('data-weight');
-    const price = parseInt(box.getAttribute('data-price'));
+    if (!selectedBox) {
+        alert("Please pehle weight select karein!");
+        return;
+    }
+
+    const weight = selectedBox.getAttribute('data-weight');
+    const price = parseInt(selectedBox.getAttribute('data-price'));
     const baseName = card.querySelector('.product-title').getAttribute('data-base-name');
     const qty = parseInt(document.getElementById('qty-' + cardId).value);
 
@@ -1059,11 +1061,11 @@ function handleAction(cardId, type) {
     if(type === 'cart') {
         cartArray.push({ name: fullName, price: price, qty: qty });
         alert(fullName + " cart mein add ho gaya!");
-        updateCartUI();
+        updateCartUI(); // Yeh function aapki file mein hona chahiye
     } else {
         let details = `${fullName} x ${qty}`;
         let total = "PKR " + (price * qty);
-        openCheckout(details, total);
+        openCheckout(details, total); // Yeh function aapki file mein hona chahiye
     }
 }
         function toggleCartSidebar(open) {
