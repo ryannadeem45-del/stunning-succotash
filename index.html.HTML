@@ -969,25 +969,21 @@ function selectWeight(cardId, selectedBox) {
     card.querySelectorAll('.weight-box').forEach(b => b.classList.remove('selected'));
     selectedBox.classList.add('selected');
     
-    // 2. Data uthayein (Price aur Original Price)
+    // 2. Data uthayein
     const price = selectedBox.getAttribute('data-price');
     const original = selectedBox.getAttribute('data-original');
     
-    // 3. UI Update (Discounted Price)
+    // 3. Price update
     document.getElementById('price-' + cardId).innerText = "PKR " + price;
     
-    // 4. UI Update (Kata hua Original Price - YAHAN MASLA THA)
+    // 4. Original Price update (YEH LINE ZAROORI HAI)
     const origElement = document.getElementById('original-price-' + cardId);
-    if(origElement) {
-        origElement.innerText = "PKR " + original;
-    }
+    origElement.innerText = "PKR " + original; // 400 ki jagah ab sahi value aayegi
     
-    // 5. Percentage calculation
+    // 5. Discount Calculation
     const percentElement = document.getElementById('discount-percent-' + cardId);
-    if(percentElement && original > price) {
-        let discount = Math.round(((original - price) / original) * 100);
-        percentElement.innerText = discount + "% OFF";
-    }
+    let discount = Math.round(((original - price) / original) * 100);
+    percentElement.innerText = discount + "% OFF";
 }
 
 // 5. Page Load hote hi prices ko refresh kar dega
