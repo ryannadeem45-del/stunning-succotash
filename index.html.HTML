@@ -186,25 +186,44 @@
             display: inline-block;
             font-weight: 700;
         }
- /* Mobile ke liye layout fix */
+/* Laptop/Desktop ke liye: Grid ko control mein rakhein */
+.products-grid {
+    display: grid;
+    /* Laptop par 3 ya 4 columns, mobile par 2 */
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); 
+    gap: 15px;
+    margin-bottom: 60px;
+}
+
+/* Mobile ke liye FIX */
 @media (max-width: 600px) {
-   @media (max-width: 600px) {
     .products-grid {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr !important; /* Mobile par har haal mein 2 columns */
-        gap: 10px !important;
-        padding: 5px !important;
+        /* Mobile par zabardasti 2 columns */
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+        padding: 0 5px !important;
     }
 
     .product-card {
-        width: 100% !important; /* Card ko pura space lene dein */
-        min-width: 0 !important; /* Ye zaroori hai taake box chota ho sake */
-        margin: 0 !important;
+        width: 100% !important;
+        /* Padding aur margin kam taake card chota dikhe */
+        padding: 5px !important;
     }
 
     .product-img {
-        height: 120px !important; /* Image height ko fix karein */
-        width: 100% !important;
+        height: 120px !important; /* Height kam ki taake mobile par fit ho */
+        object-fit: contain;
+    }
+
+    .product-title {
+        font-size: 14px !important;
+        margin-bottom: 5px;
+    }
+
+    .btn-group {
+        display: flex;
+        flex-direction: column; /* Mobile par buttons ek dusre ke niche */
+        gap: 5px;
     }
 }
         .product-card {
