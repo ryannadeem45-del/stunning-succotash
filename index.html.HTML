@@ -1160,6 +1160,12 @@ function tripleClickAdmin() {
         }, 2000); 
     }
 } 
+window.onload = function() {
+        const dhaniyaBox = document.querySelector('#dhaniya .weight-box.selected');
+        if(dhaniyaBox) {
+            selectWeight('dhaniya', dhaniyaBox);
+        }
+    };
 
 }    </script>
 <div onclick="tripleClickAdmin()" style="height:20px; cursor:pointer;"></div>
