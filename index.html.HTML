@@ -805,7 +805,8 @@
         </div>
 
         <div class="price-box">
-            <span class="original-price" id="original-price-dhaniya" style="text-decoration: line-through; color: gray; font-size: 0.9em;">PKR 400</span>     <span class="discount-price" id="price-dhaniya" style="font-weight: bold; color: #580619;">PKR 300</span>
+            <span class="original-price" id="original-price-dhaniya" style="text-decoration: line-through; color: gray; font-size: 0.9em;">PKR 400</span>
+            <span class="discount-price" id="price-dhaniya" style="font-weight: bold; color: #580619;">PKR 300</span>
             <span class="discount-badge" id="discount-percent-dhaniya" style="background: #580619; color: white; padding: 2px 5px; border-radius: 5px; font-size: 0.8em;">25% OFF</span>
         </div>
 
@@ -962,46 +963,15 @@ function saveAdminPrices() {
 // 4. Weight Select Logic (Price dynamic hogi)
 function selectWeight(cardId, selectedBox) {
     const card = document.getElementById(cardId);
-    
-    // 1. Box selection update (Selected wala highlight ho jaye)
     card.querySelectorAll('.weight-box').forEach(b => b.classList.remove('selected'));
     selectedBox.classList.add('selected');
     
-    // 2. Click kiye gaye box se data uthayein
-    const price = selectedBox.getAttribute('data-price');
-    const original = selectedBox.getAttribute('data-original');
+    const weight = selectedBox.getAttribute('data-weight');
+    const price = productPrices[cardId][weight]; // Variable se uthayega
     
-    // 3. UI Update (Discount price aur original price)
-    // Hum "cardId" ka use kar rahe hain taake har product apni sahi ID update kare
-    const priceEl = document.getElementById('price-' + cardId);
-    const origEl = document.getElementById('original-price-' + cardId);
-    const percentEl = document.getElementById('discount-percent-' + cardId);
-
-    if (priceEl) priceEl.innerText = "PKR " + price;
-    if (origEl) origEl.innerText = "PKR " + original;
-
-    // 4. Percentage calculation
-    if (percentEl && original > price) {
-        let discount = Math.round(((original - price) / original) * 100);
-        percentEl.innerText = discount + "% OFF";
-        percentEl.style.display = "inline";
-    } else if (percentEl) {
-        percentEl.style.display = "none";
-    }
-}
-    
-    // 5. Discount Percentage update
-    const percentEl = document.getElementById('discount-percent-' + cardId);
-    if(percentEl && original && price) {
-        let discount = Math.round(((original - price) / original) * 100);
-        percentEl.innerText = discount + "% OFF";
-        percentEl.style.display = "inline";
-    } else if(percentEl) {
-        percentEl.style.display = "none";
-    }
-    
-    // Cart/Buy button ke liye value update
-    selectedBox.setAttribute('data-price', price);
+    // UI Update
+    document.getElementById(`price-${cardId}`).innerText = "PKR " + price;
+    selectedBox.setAttribute('data-price', price); // Buy button ke liye update
 }
 
 // 5. Page Load hote hi prices ko refresh kar dega
@@ -1048,8 +1018,6 @@ function renderCart() {
                 }
             });
         }
-
-
         function handleAction(cardId, type) {
             const data = getCardSelectedData(cardId);
 
@@ -1192,12 +1160,6 @@ function tripleClickAdmin() {
         }, 2000); 
     }
 } 
-window.onload = function() {
-        const dhaniyaBox = document.querySelector('#dhaniya .weight-box.selected');
-        if(dhaniyaBox) {
-            selectWeight('dhaniya', dhaniyaBox);
-        }
-    };
 
 }    </script>
 <div onclick="tripleClickAdmin()" style="height:20px; cursor:pointer;"></div>
