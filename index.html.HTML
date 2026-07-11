@@ -1039,25 +1039,33 @@ function renderCart() {
                 }
             });
         }
-        function handleAction(cardId, type) {
-            const data = getCardSelectedData(cardId);
+function handleAction(cardId, type) {
+    const card = document.getElementById(cardId);
+    
+    // Yahan se "selected" box ko dhoondo
+    const selectedBox = card.querySelector('.weight-box.selected');
+    
+    // Agar box nahi mila toh 500gm wala default select kar lo
+    const box = selectedBox || card.querySelector('.weight-box');
+    
+    // Yahan se naya price uthao (jo selectWeight ne update kiya tha)
+    const weight = box.getAttribute('data-weight');
+    const price = parseInt(box.getAttribute('data-price'));
+    const baseName = card.querySelector('.product-title').getAttribute('data-base-name');
+    const qty = parseInt(document.getElementById('qty-' + cardId).value);
 
-            if(type === 'cart') {
-                let found = cartArray.find(item => item.name === data.fullName);
-                if(found) {
-                    found.qty += data.qty;
-                } else {
-                    cartArray.push({ name: data.fullName, price: data.unitPrice, qty: data.qty });
-                }
-                updateCartUI();
-                toggleCartSidebar(true);
-            } else if(type === 'buy') {
-                currentItemDetailsText = `${data.fullName} x ${data.qty}`;
-                currentTotalPrice = "PKR " + data.total;
-                openCheckout(currentItemDetailsText, currentTotalPrice);
-            }
-        }
+    const fullName = `${baseName} (${weight})`;
 
+    if(type === 'cart') {
+        cartArray.push({ name: fullName, price: price, qty: qty });
+        alert(fullName + " cart mein add ho gaya!");
+        updateCartUI();
+    } else {
+        let details = `${fullName} x ${qty}`;
+        let total = "PKR " + (price * qty);
+        openCheckout(details, total);
+    }
+}
         function toggleCartSidebar(open) {
             document.getElementById('cartSidebar').style.display = open ? "flex" : "none";
         }
