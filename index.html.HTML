@@ -962,15 +962,38 @@ function saveAdminPrices() {
 // 4. Weight Select Logic (Price dynamic hogi)
 function selectWeight(cardId, selectedBox) {
     const card = document.getElementById(cardId);
+    
+    // 1. Box selection update
     card.querySelectorAll('.weight-box').forEach(b => b.classList.remove('selected'));
     selectedBox.classList.add('selected');
     
-    const weight = selectedBox.getAttribute('data-weight');
-    const price = productPrices[cardId][weight]; // Variable se uthayega
+    // 2. Data attributes uthayein
+    const price = selectedBox.getAttribute('data-price');
+    const original = selectedBox.getAttribute('data-original');
     
-    // UI Update
-    document.getElementById(`price-${cardId}`).innerText = "PKR " + price;
-    selectedBox.setAttribute('data-price', price); // Buy button ke liye update
+    // 3. Discount Price update
+    document.getElementById('price-' + cardId).innerText = "PKR " + price;
+    
+    // 4. Original (kata hua) price update
+    const origEl = document.getElementById('original-price-' + cardId);
+    if(origEl && original) {
+        origEl.innerText = "PKR " + original;
+    } else if(origEl) {
+        origEl.innerText = ""; // Agar original nahi hai toh khali chhor dein
+    }
+    
+    // 5. Discount Percentage update
+    const percentEl = document.getElementById('discount-percent-' + cardId);
+    if(percentEl && original && price) {
+        let discount = Math.round(((original - price) / original) * 100);
+        percentEl.innerText = discount + "% OFF";
+        percentEl.style.display = "inline";
+    } else if(percentEl) {
+        percentEl.style.display = "none";
+    }
+    
+    // Cart/Buy button ke liye value update
+    selectedBox.setAttribute('data-price', price);
 }
 
 // 5. Page Load hote hi prices ko refresh kar dega
