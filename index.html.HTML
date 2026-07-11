@@ -186,23 +186,23 @@
             display: inline-block;
             font-weight: 700;
         }
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
-        }
+       .products-grid {
+    display: grid;
+    /* minmax ko 250px kar dein taake choti screen par bhi 3 set aa sakein */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    gap: 20px; /* Gap kam kar dein taake jagah bache */
+    margin-bottom: 60px;
+}
         .product-card {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            border: 1px solid #eee;
-        }
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    /* Width fix mat karein, grid handle karega */
+    display: flex;
+    flex-direction: column;
+    /* Agar phir bhi lamba ho raha hai to ye line add karein */
+    min-width: 0; 
+}
         .product-card:hover {
             transform: translateY(-6px);
             box-shadow: 0 6px 20px rgba(88, 6, 25, 0.15);
@@ -233,9 +233,13 @@
             font-weight: normal;
             margin-top: 2px;
         }
-        .price-box {
-            margin-bottom: 18px;
-        }
+      .price-box {
+    margin-bottom: 10px; /* Thoda kam margin */
+    display: flex;
+    flex-wrap: wrap; /* Taake price aur discount niche na girain */
+    align-items: center;
+    gap: 5px;
+}
         .discount-price {
             color: #580619; /* Maroon for price */
             font-size: 22px;
