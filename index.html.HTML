@@ -963,24 +963,32 @@ function saveAdminPrices() {
 function selectWeight(cardId, selectedBox) {
     const card = document.getElementById(cardId);
     
-    // 1. Box selection update
+    // 1. Box selection update (Selected wala highlight ho jaye)
     card.querySelectorAll('.weight-box').forEach(b => b.classList.remove('selected'));
     selectedBox.classList.add('selected');
     
-    // 2. Data attributes uthayein
+    // 2. Click kiye gaye box se data uthayein
     const price = selectedBox.getAttribute('data-price');
     const original = selectedBox.getAttribute('data-original');
     
-    // 3. Discount Price update
-    document.getElementById('price-' + cardId).innerText = "PKR " + price;
-    
-    // 4. Original (kata hua) price update
+    // 3. UI Update (Discount price aur original price)
+    // Hum "cardId" ka use kar rahe hain taake har product apni sahi ID update kare
+    const priceEl = document.getElementById('price-' + cardId);
     const origEl = document.getElementById('original-price-' + cardId);
-    if(origEl && original) {
-        origEl.innerText = "PKR " + original;
-    } else if(origEl) {
-        origEl.innerText = ""; // Agar original nahi hai toh khali chhor dein
+    const percentEl = document.getElementById('discount-percent-' + cardId);
+
+    if (priceEl) priceEl.innerText = "PKR " + price;
+    if (origEl) origEl.innerText = "PKR " + original;
+
+    // 4. Percentage calculation
+    if (percentEl && original > price) {
+        let discount = Math.round(((original - price) / original) * 100);
+        percentEl.innerText = discount + "% OFF";
+        percentEl.style.display = "inline";
+    } else if (percentEl) {
+        percentEl.style.display = "none";
     }
+}
     
     // 5. Discount Percentage update
     const percentEl = document.getElementById('discount-percent-' + cardId);
