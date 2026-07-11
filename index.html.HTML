@@ -186,12 +186,20 @@
             display: inline-block;
             font-weight: 700;
         }
-       .products-grid {
-    display: grid;
-    /* minmax ko 250px kar dein taake choti screen par bhi 3 set aa sakein */
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-    gap: 20px; /* Gap kam kar dein taake jagah bache */
-    margin-bottom: 60px;
+   @media (max-width: 600px) {
+    .products-grid {
+        /* Mobile par 2 columns lane ke liye */
+        grid-template-columns: repeat(2, 1fr) !important; 
+        gap: 10px !important; /* Mobile par gap thoda kam kar dein */
+    }
+
+    /* Product card ka size chota karein taake 2 fit ho sakein */
+    .product-card {
+        font-size: 12px; /* Font thoda chota karein */
+    }
+    .product-img {
+        height: 150px !important; /* Image ki height kam karein */
+    }
 }
         .product-card {
     background: white;
