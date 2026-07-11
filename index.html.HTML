@@ -963,15 +963,30 @@ function saveAdminPrices() {
 // 4. Weight Select Logic (Price dynamic hogi)
 function selectWeight(cardId, selectedBox) {
     const card = document.getElementById(cardId);
+    
+    // 1. Selection update
     card.querySelectorAll('.weight-box').forEach(b => b.classList.remove('selected'));
     selectedBox.classList.add('selected');
     
-    const weight = selectedBox.getAttribute('data-weight');
-    const price = productPrices[cardId][weight]; // Variable se uthayega
+    // 2. Data uthayein (Price aur Original Price)
+    const price = selectedBox.getAttribute('data-price');
+    const original = selectedBox.getAttribute('data-original');
     
-    // UI Update
-    document.getElementById(`price-${cardId}`).innerText = "PKR " + price;
-    selectedBox.setAttribute('data-price', price); // Buy button ke liye update
+    // 3. UI Update (Discounted Price)
+    document.getElementById('price-' + cardId).innerText = "PKR " + price;
+    
+    // 4. UI Update (Kata hua Original Price - YAHAN MASLA THA)
+    const origElement = document.getElementById('original-price-' + cardId);
+    if(origElement) {
+        origElement.innerText = "PKR " + original;
+    }
+    
+    // 5. Percentage calculation
+    const percentElement = document.getElementById('discount-percent-' + cardId);
+    if(percentElement && original > price) {
+        let discount = Math.round(((original - price) / original) * 100);
+        percentElement.innerText = discount + "% OFF";
+    }
 }
 
 // 5. Page Load hote hi prices ko refresh kar dega
